@@ -1,0 +1,10 @@
+recursive-include pyawsutils/aws_cf *.zip *.json
+recursive-include pyawsutils/aws_iot_policies *.json
+include pyawsutils/logging.yaml
+include pyawsutils/ca_certs/*.*
+
+# These files are read in setup.py so they must be included in the source zip for pip to be able to install the zip
+# Note however that since the files are not a part of the package (not inside the pyawsutils sub folder)
+# they won't be included in the python wheel.
+include pypi.md
+include requirements.txt

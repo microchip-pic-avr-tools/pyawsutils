@@ -1,0 +1,128 @@
+{
+    "Parameters": {
+        "UserName": {
+            "Type": "String",
+            "Description": "The username",
+            "Default": "MyUser"
+        },
+        "UserPassword": {
+            "Type": "String",
+            "Description": "Password of the account",
+            "MinLength": 4,
+            "Default": "1234"
+        }
+    },
+    "Resources": {
+        "MyLambdaJITRRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "lambda.amazonaws.com"
+                                ]
+                            },
+                            "Action": [
+                                "sts:AssumeRole"
+                            ]
+                        }
+                    ]
+                },
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+                    "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess"
+                ],
+                "Path": "/",
+                "Policies": [
+                    {
+                        "PolicyName": "MyLambdaJITRPolicy",
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "iot:UpdateCertificate",
+                                        "iot:CreatePolicy",
+                                        "iot:AttachPrincipalPolicy",
+                                        "iot:AttachThingPrincipal", 
+                                        "iot:CreateThing",
+                                        "iot:CreateThingType",
+                                        "iot:DescribeCertificate",
+                                        "iot:DescribeCaCertificate",
+                                        "iot:DescribeThing",
+                                        "iot:DescribeThingType",
+                                        "iot:GetPolicy"
+                                    ],
+                                    "Resource": "*"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "MyLambdaJITR": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Handler": "jitr_lambda.lambda_handler",
+                "Role": {
+                    "Fn::GetAtt": [
+                        "MyLambdaJITRRole",
+                        "Arn"
+                    ]
+                },
+                "Runtime": "python3.6",
+                "Timeout": 30,
+                "Code": {
+                    "ZipFile": "import os\nimport base64\nimport binascii\nimport json\nimport boto3\nimport botocore\niot = boto3.client('iot')\nZT_THING_TYPE_NAME = 'microchip-zero-touch-kit'\ndef lambda_handler(event, context):\n    region = os.environ['AWS_DEFAULT_REGION']\n    account_id = event['awsAccountId']\n    certificate_id = event['certificateId']\n    response = iot.describe_certificate(certificateId=certificate_id)\n    certificate_arn = response['certificateDescription']['certificateArn']\n    pem_lines = response['certificateDescription']['certificatePem'].split('\\n')\n    pem_lines = list(filter(None, pem_lines))\n    raw_pem = ''.join(pem_lines[1:-1])\n    cert_der = base64.standard_b64decode(raw_pem)\n    subj_key_id_prefix = b'\\x30\\x1D\\x06\\x03\\x55\\x1D\\x0E\\x04\\x16\\x04\\x14'\n    subj_key_id_index = cert_der.index(subj_key_id_prefix) + len(subj_key_id_prefix)\n    subj_key_id = binascii.b2a_hex(cert_der[subj_key_id_index:subj_key_id_index+20]).decode('ascii')\n    print('Certificate Subject Key ID: {}'.format(subj_key_id))\n    thing_name = subj_key_id\n    client_id = subj_key_id\n    response = iot.create_thing_type(thingTypeName=ZT_THING_TYPE_NAME)\n    response = iot.create_thing(thingName=thing_name,thingTypeName=ZT_THING_TYPE_NAME)\n    policy_name = 'ZTPolicy_{}'.format(certificate_id)\n    policy_document = {\n        'Version': '2012-10-17',\n        'Statement': [\n            {\n                'Effect': 'Allow',\n                'Action': [\n                    'iot:Connect'\n                ],\n                'Resource': [\n                    'arn:aws:iot:{}:{}:client/{}'.format(region, account_id, client_id)\n                ]\n            },\n            {\n                'Effect': 'Allow',\n                'Action': [\n                    'iot:Publish',\n                    'iot:Receive'\n                ],\n                'Resource': [\n                    'arn:aws:iot:{}:{}:topic/${{iot:ClientId}}/*'.format(region, account_id),\n                    'arn:aws:iot:{}:{}:topic/$aws/things/${{iot:ClientId}}/shadow/*'.format(region, account_id)\n                ]\n            },\n            {\n                'Effect': 'Allow',\n                'Action': [\n                    'iot:Subscribe'\n                ],\n                'Resource': [\n                    'arn:aws:iot:{}:{}:topicfilter/${{iot:ClientId}}/#'.format(region, account_id),\n                    'arn:aws:iot:{}:{}:topicfilter/$aws/things/${{iot:ClientId}}/shadow/*'.format(region, account_id)\n                ]\n            },\n            {\n                'Effect': 'Allow',\n                'Action': [\n                    'iot:UpdateThingShadow',\n                    'iot:GetThingShadow'\n                ],\n                'Resource': [\n                    'arn:aws:iot:{}:{}:topic/$aws/things/${{iot:ClientId}}/shadow/*'.format(region, account_id)\n                ]\n            }\n        ]\n    }\n    try:\n        response = iot.create_policy(\n            policyName=policy_name,\n            policyDocument=json.dumps(policy_document, indent=4))\n        print('Created policy {}'.format(policy_name))\n    except botocore.exceptions.ClientError as e:\n        if e.response['Error']['Code'] == 'ResourceAlreadyExistsException':\n            print('Policy {} already exists'.format(policy_name))\n        else:\n            raise\n    iot.attach_principal_policy(\n        policyName=policy_name,\n        principal=certificate_arn)\n    response = iot.update_certificate(\n        certificateId=certificate_id,\n        newStatus='ACTIVE')\n"
+                }
+            }
+        },
+        "MyIoTJITRRule": {
+            "Type": "AWS::IoT::TopicRule",
+            "Properties": {
+                "TopicRulePayload": {
+                    "RuleDisabled": false,
+                    "Sql": "SELECT * FROM '$aws/events/certificates/registered/#'",
+                    "Actions": [
+                        {
+                            "Lambda": {
+                                "FunctionArn": {
+                                    "Fn::GetAtt": [
+                                        "MyLambdaJITR",
+                                        "Arn"
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "MyIoTLambdaInvokePerms": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+                "FunctionName": {
+                    "Fn::GetAtt": [
+                        "MyLambdaJITR",
+                        "Arn"
+                    ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "iot.amazonaws.com"
+            }
+        }
+    },
+    "Outputs": {
+        "UserName": {
+            "Value": {
+                "Ref": "UserName"
+            }
+        }
+    }
+}
