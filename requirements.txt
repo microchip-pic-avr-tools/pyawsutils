@@ -1,0 +1,11 @@
+# External packages
+boto3>=1.15.2
+cryptography
+pyOpenSSL
+packaging>=20.0
+pyyaml
+appdirs
+
+# Microchip packages
+pyedbglib>=2.14
+pytrustplatform>=0.13.*

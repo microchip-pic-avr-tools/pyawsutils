@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>pyawsutils documentation &#8212; pyawsutils  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/microchip.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pyawsutils package" href="pyawsutils.html" /> 
+  </head><body>
+    <header>
+        <div class="logo">
+            <a href="https://microchip.com" target="_blank">
+                <img src="_static/microchip.png" />
+            </a>
+        </div>
+    </header>
+
+    <div class="related-wrapper">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pyawsutils.html" title="pyawsutils package"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">pyawsutils  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pyawsutils documentation</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="document">
+        
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="#">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">pyawsutils documentation</a><ul>
+<li><a class="reference internal" href="#pyawsutils-python-aws-utilities">pyawsutils - Python AWS utilities</a></li>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#usage-example-1-multi-account-registration-mar">Usage example 1: Multi-Account Registration (MAR)</a></li>
+<li><a class="reference internal" href="#usage-example-2-register-signer">Usage example 2: Register Signer</a></li>
+<li><a class="reference internal" href="#usage-example-3-just-in-time-registration-jitr">Usage example 3: Just-in-Time Registration (JITR)</a></li>
+<li><a class="reference internal" href="#usage-example-4-clean-account">Usage example 4: Clean account</a></li>
+<li><a class="reference internal" href="#logging">Logging</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="pyawsutils.html"
+                          title="next chapter">pyawsutils package</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+        <div class="documentwrapper">
+            <div class="bodywrapper">
+                <div class="body" role="main">
+                    
+  <section id="pyawsutils-documentation">
+<h1>pyawsutils documentation<a class="headerlink" href="#pyawsutils-documentation" title="Permalink to this heading">¶</a></h1>
+<section id="pyawsutils-python-aws-utilities">
+<h2>pyawsutils - Python AWS utilities<a class="headerlink" href="#pyawsutils-python-aws-utilities" title="Permalink to this heading">¶</a></h2>
+<p>pyawsutils is a collection of utilities for interacting with Amazon Web Services.
+It can be used as a library by instantiating any of the contained classes.</p>
+<dl class="simple">
+<dt>Supported kits are:</dt><dd><ul class="simple">
+<li><p>AVR-IOT (all variants)</p></li>
+<li><p>PIC-IOT (all variants)</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
+<dl class="simple">
+<dt>pyawsutils is available:</dt><dd><ul class="simple">
+<li><p>install using pip from pypi: <a class="reference external" href="https://pypi.org/project/pyawsutils">https://pypi.org/project/pyawsutils</a></p></li>
+<li><p>browse source code on github: <a class="reference external" href="https://github.com/microchip-pic-avr-tools/pyawsutils">https://github.com/microchip-pic-avr-tools/pyawsutils</a></p></li>
+<li><p>read API documentation on github: <a class="reference external" href="https://microchip-pic-avr-tools.github.io/pyawsutils">https://microchip-pic-avr-tools.github.io/pyawsutils</a></p></li>
+<li><p>read the changelog on github: <a class="reference external" href="https://github.com/microchip-pic-avr-tools/pyawsutils/blob/main/CHANGELOG.md">https://github.com/microchip-pic-avr-tools/pyawsutils/blob/main/CHANGELOG.md</a></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="usage-example-1-multi-account-registration-mar">
+<h2>Usage example 1: Multi-Account Registration (MAR)<a class="headerlink" href="#usage-example-1-multi-account-registration-mar" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyawsutils.mar</span> <span class="kn">import</span> <span class="n">aws_mar</span>
+<span class="kn">from</span> <span class="nn">pyawsutils.policy</span> <span class="kn">import</span> <span class="n">Policy</span>
+
+<span class="n">device_cert_file</span> <span class="o">=</span> <span class="s2">&quot;my_device.crt&quot;</span>
+<span class="n">my_policy</span> <span class="o">=</span> <span class="s2">&quot;my_policy&quot;</span>
+<span class="n">templatefile</span> <span class="o">=</span> <span class="s2">&quot;my_policytemplate.json&quot;</span>
+
+<span class="c1"># Read policy template file</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">templatefile</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">myfile</span><span class="p">:</span>
+    <span class="n">policy_template</span> <span class="o">=</span> <span class="n">myfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="c1"># Create AWS policy</span>
+<span class="n">aws_policy_tool</span> <span class="o">=</span> <span class="n">Policy</span><span class="p">()</span>
+<span class="n">aws_policy_tool</span><span class="o">.</span><span class="n">create_policy</span><span class="p">(</span><span class="n">my_policy</span><span class="p">,</span> <span class="n">policy_template</span><span class="p">)</span>
+
+<span class="c1"># Register device certificate without CA for custom provisioning with MAR.</span>
+<span class="n">aws_mar_tool</span> <span class="o">=</span> <span class="n">aws_mar</span><span class="p">()</span>
+<span class="n">aws_mar_tool</span><span class="o">.</span><span class="n">create_device</span><span class="p">(</span><span class="n">certificate_file</span><span class="o">=</span><span class="n">device_cert_file</span><span class="p">,</span>
+                           <span class="n">policy_name</span><span class="o">=</span><span class="n">my_policy</span><span class="p">,</span>
+                           <span class="n">thing_type</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="usage-example-2-register-signer">
+<h2>Usage example 2: Register Signer<a class="headerlink" href="#usage-example-2-register-signer" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyawsutils.register_signer</span> <span class="kn">import</span> <span class="n">register_signer</span>
+
+<span class="c1"># Register signer with AWS. For custom provisioning only.</span>
+<span class="n">register_signer</span><span class="p">(</span><span class="n">signer_ca_key_path</span><span class="o">=</span><span class="n">signer_ca_key_file</span><span class="p">,</span>
+                <span class="n">signer_ca_cert_path</span><span class="o">=</span><span class="n">signer_ca_cert_file</span><span class="p">,</span>
+                <span class="n">signer_ca_ver_cert_path</span><span class="o">=</span><span class="n">signer_ca_ver_cert_file</span><span class="p">,</span>
+                <span class="n">aws_profile</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="usage-example-3-just-in-time-registration-jitr">
+<h2>Usage example 3: Just-in-Time Registration (JITR)<a class="headerlink" href="#usage-example-3-just-in-time-registration-jitr" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyawsutils.aws_cloudformation</span> <span class="kn">import</span> <span class="n">setup_aws_jitr_account</span>
+<span class="c1"># Setup AWS account for JITR, using Cloudformation and uploading Lambda pack with JITR code</span>
+<span class="n">setup_aws_jitr_account</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="n">force_setup</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="usage-example-4-clean-account">
+<h2>Usage example 4: Clean account<a class="headerlink" href="#usage-example-4-clean-account" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyawsutils.clean</span> <span class="kn">import</span> <span class="n">AccountCleaner</span>
+<span class="n">clean_tool</span> <span class="o">=</span> <span class="n">AccountCleaner</span><span class="p">(</span><span class="n">profile_name</span><span class="p">)</span>
+<span class="n">clean_tool</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this heading">¶</a></h2>
+<p>This package uses the Python logging module for publishing log messages to library users.
+A basic configuration can be used (see example), but for best results a more thorough configuration is
+recommended in order to control the verbosity of output from dependencies in the stack which also use logging.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">NullHandler</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pyawsutils.html">pyawsutils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyawsutils.html#module-pyawsutils.mar">Multi-Account Registration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#pyawsutils.mar.aws_mar"><code class="docutils literal notranslate"><span class="pre">aws_mar</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.mar.aws_mar.activate_certificate"><code class="docutils literal notranslate"><span class="pre">aws_mar.activate_certificate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.mar.aws_mar.combine_everything"><code class="docutils literal notranslate"><span class="pre">aws_mar.combine_everything()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.mar.aws_mar.create_cert_fingerprint"><code class="docutils literal notranslate"><span class="pre">aws_mar.create_cert_fingerprint()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.mar.aws_mar.create_device"><code class="docutils literal notranslate"><span class="pre">aws_mar.create_device()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.mar.aws_mar.create_thing"><code class="docutils literal notranslate"><span class="pre">aws_mar.create_thing()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.mar.aws_mar.register_certificate"><code class="docutils literal notranslate"><span class="pre">aws_mar.register_certificate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#pyawsutils.mar.mar_cli_handler"><code class="docutils literal notranslate"><span class="pre">mar_cli_handler()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyawsutils.html#module-pyawsutils.aws_cloudformation">AWS CloudFormation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#pyawsutils.aws_cloudformation.check_status"><code class="docutils literal notranslate"><span class="pre">check_status()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#pyawsutils.aws_cloudformation.create_cloudformation_stack"><code class="docutils literal notranslate"><span class="pre">create_cloudformation_stack()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#pyawsutils.aws_cloudformation.jitr_cli_handler"><code class="docutils literal notranslate"><span class="pre">jitr_cli_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#pyawsutils.aws_cloudformation.setup_aws_jitr_account"><code class="docutils literal notranslate"><span class="pre">setup_aws_jitr_account()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyawsutils.html#module-pyawsutils.aws_lambda">Lambda functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#pyawsutils.aws_lambda.update_lambda_function"><code class="docutils literal notranslate"><span class="pre">update_lambda_function()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyawsutils.html#module-pyawsutils.policy">Policy functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#pyawsutils.policy.Policy"><code class="docutils literal notranslate"><span class="pre">Policy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.policy.Policy.build_policy"><code class="docutils literal notranslate"><span class="pre">Policy.build_policy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.policy.Policy.create_policy"><code class="docutils literal notranslate"><span class="pre">Policy.create_policy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.policy.Policy.create_policy_version"><code class="docutils literal notranslate"><span class="pre">Policy.create_policy_version()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.policy.Policy.get_policy"><code class="docutils literal notranslate"><span class="pre">Policy.get_policy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.policy.Policy.policy_exists"><code class="docutils literal notranslate"><span class="pre">Policy.policy_exists()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#pyawsutils.policy.create_policy_mar"><code class="docutils literal notranslate"><span class="pre">create_policy_mar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#pyawsutils.policy.policy_cli_handler"><code class="docutils literal notranslate"><span class="pre">policy_cli_handler()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyawsutils.html#module-pyawsutils.aws_ca_cert">Amazon root CA certificate retrieval</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#pyawsutils.aws_ca_cert.aws_get_root_ca_cert"><code class="docutils literal notranslate"><span class="pre">aws_get_root_ca_cert()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#pyawsutils.aws_ca_cert.aws_get_root_ca_cert_filename"><code class="docutils literal notranslate"><span class="pre">aws_get_root_ca_cert_filename()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyawsutils.html#module-pyawsutils.register_signer">Signer registration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#pyawsutils.register_signer.register_signer"><code class="docutils literal notranslate"><span class="pre">register_signer()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyawsutils.html#module-pyawsutils.clean">Account cleaning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#pyawsutils.clean.AccountCleaner"><code class="docutils literal notranslate"><span class="pre">AccountCleaner</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.clean.AccountCleaner.cleanup"><code class="docutils literal notranslate"><span class="pre">AccountCleaner.cleanup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.clean.AccountCleaner.delete_certificates"><code class="docutils literal notranslate"><span class="pre">AccountCleaner.delete_certificates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.clean.AccountCleaner.delete_policies"><code class="docutils literal notranslate"><span class="pre">AccountCleaner.delete_policies()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.clean.AccountCleaner.delete_things"><code class="docutils literal notranslate"><span class="pre">AccountCleaner.delete_things()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.clean.AccountCleaner.detach_policies_from_certificate"><code class="docutils literal notranslate"><span class="pre">AccountCleaner.detach_policies_from_certificate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.clean.AccountCleaner.detach_policy_from_certificates"><code class="docutils literal notranslate"><span class="pre">AccountCleaner.detach_policy_from_certificates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.clean.AccountCleaner.detach_principals_from_thing"><code class="docutils literal notranslate"><span class="pre">AccountCleaner.detach_principals_from_thing()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyawsutils.html#pyawsutils.clean.AccountCleaner.fast_cleanup"><code class="docutils literal notranslate"><span class="pre">AccountCleaner.fast_cleanup()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#pyawsutils.clean.clean_cli_handler"><code class="docutils literal notranslate"><span class="pre">clean_cli_handler()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyawsutils.html#module-pyawsutils">pyawsutils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#pyawsutils-python-aws-utilities">pyawsutils - Python AWS utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#usage-example-1-multi-account-registration-mar">Usage example 1: Multi-Account Registration (MAR)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#usage-example-2-register-signer">Usage example 2: Register Signer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#usage-example-3-just-in-time-registration-jitr">Usage example 3: Just-in-Time Registration (JITR)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#usage-example-4-clean-account">Usage example 4: Clean account</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyawsutils.html#logging">Logging</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-wrapper">
+        <div class="footer" role="contentinfo">
+            © Copyright 2022, Microchip Technology Inc
+        </div>
+    </div>
+  </body>
+</html>
