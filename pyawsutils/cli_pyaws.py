@@ -19,14 +19,8 @@ from .aws_cloudformation import jitr_cli_handler
 from .pyaws_errors import PyawsError
 from .status_codes import STATUS_SUCCESS, STATUS_FAILURE
 
-try:
-    #pylint: disable=no-name-in-module
-    from .version import VERSION, BUILD_DATE, COMMIT_ID
-except ImportError:
-    print("Version info not found!")
-    VERSION = "0.0.0"
-    COMMIT_ID = "N/A"
-    BUILD_DATE = "N/A"
+from . import __version__ as VERSION
+from . import BUILD_DATE, COMMIT_ID
 
 # Actions requiring signer CA certificate and signer CA key file arguments
 ACTIONS_REQUIRING_MAR = ['register-mar']
@@ -105,15 +99,15 @@ def main():
         - pyawsutils <action> [-switches]
 
     Basic actions:
-        - create-policy
-        - register-mar
-        - register-jitr
-        - clean 
+        - create-policy: Create a policy on your current AWS account
+        - register-mar: Register a device in AWS by using multi account registration (MAR) with your AWS profile
+        - register-jitr: Setup AWS account for Just in time registration(JITR) with your AWS profile. A cloudformation stack(MCHPStack) is created, including a lambda function that registers the device when it connects for the first time
+        - clean: Delete all device certificates, policies and things on an AWS IoT account with your current profile. Note that CA certificates are not deleted. Other services like cloudformation stacks are also not deleted.
         '''),
         epilog=textwrap.dedent('''\
     Usage examples:
         Policy example
-        - pyawsutils create-policy --policy mypolicy.json --policy-name mypolicy
+        - pyawsutils create-policy --policy-template mypolicy.json --policy-name mypolicy
 
         MAR example
         - pyawsutils register-mar -c mycertificate.pem --policy-name mypolicy
@@ -121,11 +115,11 @@ def main():
         MAR example 2
         - pyawsutils register-mar -c mycertificate.pem --policy-name mypolicy --thing-type mythingfolder
 
-        JITR example, registering account
+        JITR example
         - pyawsutils register-jitr
 
         Cleaner example
-        - pyawsutils clean 
+        - pyawsutils clean
         '''))
 
 
@@ -199,7 +193,7 @@ def main():
         if args.action == "clean":
             return clean_cli_handler(args)
         if args.action == "register-jitr":
-            return jitr_cli_handler()
+            return jitr_cli_handler(args)
         if args.action == "create-policy":
             return policy_cli_handler(args)
 

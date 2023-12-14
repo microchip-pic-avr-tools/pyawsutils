@@ -18,7 +18,7 @@ pyawsutils is intended as a library but could also be used stand-alone as a CLI.
 Make sure you have the AWS CLI installed and run aws configure first to setup your profile.
 
 ## Command-line interface
-pyawsutils has 4 actions with different options. See help and examples below for more details. 
+pyawsutils has 4 actions with different options. See help and examples below for more details.
 
 Getting help:
 ```bash
@@ -26,7 +26,7 @@ pyawsutils --help
 ```
 
 #### register-mar action
-The register-mar action supports AWS Multi account registration(MAR) of your device certificate(s) with your AWS profile.  
+The register-mar action supports AWS Multi account registration(MAR) of your device certificate(s) with your AWS profile.
 
 Example:
 ```bash
@@ -34,7 +34,7 @@ pyawsutils register-mar -c mycertificate.pem --policy-name mypolicy
 ```
 
 #### register-jitr action
-The register-jitr action uses Just-In-Time-Registration(JITR) of device certificates on AWS IoT
+The register-jitr action setup an AWS account for Just in time registration(JITR) with your AWS profile. A cloudformation stack(MCHPStack) is created including a lambda function that registers the device when it connects for the first time.
 
 Example:
 ```bash
@@ -50,11 +50,11 @@ pyawsutils create-policy --policy mypolicy.json --policy-name mypolicy
 ```
 
 #### Clean action
-The clean action let you delete all certificates and things in your AWS IoT account.  
+The clean action let you delete all device certificates, things and policies in an AWS IoT account with your AWS profile. Note: CA certificates are not deleted. Other services like cloudformation stacks are also not deleted.
 
 Example:
 ```bash
-pyawsutils clean  
+pyawsutils clean
 ```
 
 
@@ -111,7 +111,7 @@ setup_aws_jitr_account(force=force_setup)
 ```
 
 ### Cleaner utility
-The `clean` module contains functions to delete certificates, things and policies from your account. 
+The `clean` module contains functions to delete certificates, things and policies from your account.
 
 ```python
 from pyawsutils.clean import AccountCleaner
@@ -122,6 +122,6 @@ clean_tool.cleanup()
 ## Versioning
 pyawsutils version can be determined by:
 ```python
-from pyawsutils.version import VERSION as pyawsutils_version
-print("pyawsutils version {}".format(pyawsutils_version))
+from pyawsutils import __version__ as pyawsutils_version
+print(f"pyawsutils version {pyawsutils_version}")
 ```

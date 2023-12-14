@@ -3,13 +3,13 @@ This module enables registering a signer in the AWS cloud
 """
 from logging import getLogger
 import re
-import boto3
 import botocore
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 
 from pytrustplatform.verification_cert_builder import build_verification_cert
+from .aws_services import create_aws_session
 
 
 _crypto_be = default_backend()
@@ -60,17 +60,7 @@ def register_signer(signer_ca_key_path, signer_ca_cert_path, signer_ca_ver_cert_
 
     # Create an AWS session with the credentials from the specified profile
     logger.info('Initializing AWS IoT client')
-    try:
-        aws_session = boto3.session.Session(profile_name=aws_profile)
-    except botocore.exceptions.ProfileNotFound as error:
-        if aws_profile == 'default':
-            raise RuntimeError('AWS profile not found. '
-                               'Please make sure you have the AWS CLI installed and '
-                               'run "aws configure" to setup profile.')
-
-        raise RuntimeError('AWS profile not found. '
-                           'Please make sure you have the AWS CLI installed and '
-                           'run "aws configure --profile {}" to setup profile.'.format(aws_profile))
+    aws_session = create_aws_session(aws_profile)
 
     # Create a client to the AWS IoT service
     aws_iot = aws_session.client('iot')

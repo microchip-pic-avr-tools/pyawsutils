@@ -1,0 +1,69 @@
+[build-system]
+# project table in pyproject.toml was added in setuptools 61.0.0
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyawsutils"
+authors = [
+    {name = "Microchip Technology", email = "support@microchip.com"}
+]
+description = "A collection of utilities for interacting with Amazon Web Services"
+license = {text = "MIT"}
+keywords = ['Microchip', 'AWS', 'AVR-IOT', 'PIC-IOT']
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Embedded Systems",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "License :: OSI Approved :: MIT License"
+]
+
+dependencies = [
+    # External packages
+    "boto3>=1.15.2",
+    "cryptography",
+    "pyOpenSSL",
+    "packaging>=20.0",
+    "pyyaml",
+    "appdirs",
+
+    # Microchip packages
+    "pytrustplatform>=0.13"
+]
+
+dynamic = ["readme", "version"]
+
+[tool.setuptools.dynamic]
+readme = {file = ["pypi.md", "CHANGELOG.md"], content-type = "text/markdown"}
+version = {attr = "pyawsutils.__version__"}
+
+[project.urls]
+"Homepage" = "https://github.com/microchip-pic-avr-tools/pyawsutils"
+
+[project.optional-dependencies]
+dev = ["pylint>=2.15"]
+test = ["mock", "pytest"]
+doc = [
+    # To avoid missing modules when generating documentation the mock module used by the tests is needed.
+    # The mock module could also be useful if some imports need to be mocked out when generating documentation.
+    "mock",
+    "sphinx"
+]
+
+[project.scripts]
+pyawsutils = "pyawsutils.cli_pyaws:main"
+
+[tool.setuptools.packages.find]
+exclude = ["pyawsutils.tests*", "doc*", "JITR*"]
+
+[tool.setuptools.package-data]
+pyawsutils = ["logging.yaml", "aws_cf/*.zip", "aws_cf/*.json", "aws_iot_policies/*.json", "ca_certs/*.*"]

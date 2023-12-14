@@ -4,9 +4,11 @@ AWS Lambda Function utility
 
 #-- Import modules
 from logging import getLogger
-import boto3
+from venv import create
 
-def update_lambda_function(zip_file, stackname):
+from .aws_services import create_aws_session
+
+def update_lambda_function(zip_file, stackname, aws_profile='default'):
     """
     Update lambda function with ZIP deployment package
 
@@ -14,13 +16,16 @@ def update_lambda_function(zip_file, stackname):
     :type zip_file: str
     :param stackname: name of stack to update
     :type stackname: str
+    :param aws_profile: Name of AWS profile to use, defaults to 'default'
+    :type aws_profile: str, optional
     """
     logger = getLogger(__name__)
     with open(zip_file, mode='rb') as file: # b is important -> binary
         zip_data = file.read()
 
     # Update lambda function
-    client = boto3.client('lambda')
+    aws_session = create_aws_session(aws_profile=aws_profile)
+    client = aws_session.client('lambda')
 
     # List functions. Find correct function / stack to update
     myfunctions_list = client.list_functions()["Functions"]

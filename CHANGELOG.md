@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2] - December 2023
+
+### Added
+- DSG-5731 Help improvements
+
+### Fixed
+- DSG-5640 Clean up unused pyedbglib dependencies / requirements
+- DSG-5714 pyawsutils clean action should also delete MCHPStack
+- DSG-5722 Profile not taken into account when doing cloud formation
+- DSG-5729 Bug/typo in usage example for pyawsutils create-policy
+- DSG-6131 PEP-0440 compliance for pyawsutils
+
 ## [1.1.0] - October 2022
 
 ### Fixed

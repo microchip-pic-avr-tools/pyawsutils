@@ -3,11 +3,10 @@ AWS Cleaner utility
 """
 
 from logging import getLogger
-import boto3
-import botocore
 
 from .pyaws_errors import PyawsError
 from .status_codes import STATUS_SUCCESS, STATUS_FAILURE
+from .aws_services import create_aws_session
 
 class AccountCleaner():
     """
@@ -18,20 +17,11 @@ class AccountCleaner():
     """
     def __init__(self, aws_profile="default"):
         self.logger = getLogger(__name__)
-        try:
-            aws_session = boto3.session.Session(profile_name=aws_profile)
-            self.logger.info("Using AWS profile %s", aws_profile)
-        except botocore.exceptions.ProfileNotFound:
-            if aws_profile == 'default':
-                raise PyawsError(
-                    'AWS profile not found. Please make sure you have the AWS CLI installed and run'
-                    ' "aws configure" to setup profile.')
-            raise PyawsError(
-                'AWS profile not found. Please make sure you have the AWS CLI installed and run'
-                ' "aws configure --profile {}" to setup profile.'.format(aws_profile))
+        self.logger.info("Using AWS profile %s", aws_profile)
+        aws_session = create_aws_session(aws_profile)
 
         self.aws_iot = aws_session.client("iot")
-        self.account_id = boto3.client('sts').get_caller_identity().get('Account')
+        self.account_id = aws_session.client('sts').get_caller_identity().get('Account')
         self.region = aws_session.region_name
 
     def detach_principals_from_thing(self, thingName):
@@ -118,7 +108,7 @@ class AccountCleaner():
     def delete_policies(self, bulk_delete_size=20):
         """
         Delete all iot policies from current AWS account
-        
+
         :param bulk_delete_size: bulk size, defaults to 20
         :type bulk_delete_size: int, optional
         """

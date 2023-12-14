@@ -4,13 +4,13 @@ AWS multi account registration (MAR)
 
 import binascii
 from logging import getLogger
-import boto3
 import botocore
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from pytrustplatform.cert_get_data import cert_get_skid, create_cert_fingerprint, cert_get_common_name
 from .policy import Policy
+from .aws_services import create_aws_session
 from .pyaws_errors import PyawsError
 from .status_codes import STATUS_SUCCESS, STATUS_FAILURE
 
@@ -23,16 +23,7 @@ class aws_mar():
     """
     def __init__(self, aws_profile="default"):
         self.logger = getLogger(__name__)
-        try:
-            aws_session = boto3.session.Session(profile_name=aws_profile)
-        except botocore.exceptions.ProfileNotFound:
-            if aws_profile == 'default':
-                raise Exception(
-                    'AWS profile not found. Please make sure you have the AWS CLI installed and run'
-                    ' "aws configure" to setup profile.')
-            raise Exception(
-                'AWS profile not found. Please make sure you have the AWS CLI installed and run'
-                ' "aws configure --profile {}" to setup profile.'.format(aws_profile))
+        aws_session = create_aws_session(aws_profile)
         self.aws_iot = aws_session.client("iot")
 
     def register_certificate(self, certificate, status='ACTIVE'):
@@ -162,7 +153,7 @@ def mar_cli_handler(args):
     certificates = []
 
     if args.certificate is None and args.file is None:
-        logger.info("No certificate(s) to register. Use argument -c or -f to list certificate(s). See help with argument --help.")    
+        logger.info("No certificate(s) to register. Use argument -c or -f to list certificate(s). See help with argument --help.")
         return STATUS_FAILURE
 
     if args.certificate is not None:

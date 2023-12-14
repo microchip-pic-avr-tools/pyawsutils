@@ -1,20 +1,16 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>pyawsutils package &#8212; pyawsutils  documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/microchip.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="_static/microchip.css?v=e28e0ba5" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="pyawsutils documentation" href="index.html" /> 
@@ -297,24 +293,38 @@ ski=Subject Key identifier or scn=Subject Common Name</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pyawsutils.aws_cloudformation.create_cloudformation_stack">
-<span class="sig-prename descclassname"><span class="pre">pyawsutils.aws_cloudformation.</span></span><span class="sig-name descname"><span class="pre">create_cloudformation_stack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pc_template_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stackname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zipname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyawsutils.aws_cloudformation.create_cloudformation_stack" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyawsutils.aws_cloudformation.</span></span><span class="sig-name descname"><span class="pre">create_cloudformation_stack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pc_template_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stackname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zipname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aws_profile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyawsutils.aws_cloudformation.create_cloudformation_stack" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create Cloudformation stack based on JSON template
 Update lambda function with zip deployment package</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pc_template_file</strong> (<em>str</em>) – Cloudformation template file</p></li>
+<li><p><strong>stackname</strong> (<em>str</em>) – Cloudformation stack name</p></li>
+<li><p><strong>zipname</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of zip containing lambda function, defaults to “”</p></li>
+<li><p><strong>force</strong> (<em>bool</em><em>, </em><em>optional</em>) – Force stack re-creation, defaults to False</p></li>
+<li><p><strong>aws_profile</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of AWS profile to use, defaults to ‘default’</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pyawsutils.aws_cloudformation.jitr_cli_handler">
-<span class="sig-prename descclassname"><span class="pre">pyawsutils.aws_cloudformation.</span></span><span class="sig-name descname"><span class="pre">jitr_cli_handler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyawsutils.aws_cloudformation.jitr_cli_handler" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyawsutils.aws_cloudformation.</span></span><span class="sig-name descname"><span class="pre">jitr_cli_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyawsutils.aws_cloudformation.jitr_cli_handler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Entry point for JITR command of CLI</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pyawsutils.aws_cloudformation.setup_aws_jitr_account">
-<span class="sig-prename descclassname"><span class="pre">pyawsutils.aws_cloudformation.</span></span><span class="sig-name descname"><span class="pre">setup_aws_jitr_account</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyawsutils.aws_cloudformation.setup_aws_jitr_account" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyawsutils.aws_cloudformation.</span></span><span class="sig-name descname"><span class="pre">setup_aws_jitr_account</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aws_profile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyawsutils.aws_cloudformation.setup_aws_jitr_account" title="Permalink to this definition">¶</a></dt>
 <dd><p>Setup AWS account for JITR, using Cloudformation and uploading Lambda pack with JITR code</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>force</strong> (<em>boolean</em>) – force stack creation again if it already exists</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>aws_profile</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of profile to use, defaults to ‘default’</p></li>
+<li><p><strong>force</strong> (<em>boolean</em>) – force stack creation again if it already exists</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -325,13 +335,14 @@ Update lambda function with zip deployment package</p>
 <p>AWS Lambda Function utility</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pyawsutils.aws_lambda.update_lambda_function">
-<span class="sig-prename descclassname"><span class="pre">pyawsutils.aws_lambda.</span></span><span class="sig-name descname"><span class="pre">update_lambda_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zip_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stackname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyawsutils.aws_lambda.update_lambda_function" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyawsutils.aws_lambda.</span></span><span class="sig-name descname"><span class="pre">update_lambda_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zip_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stackname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aws_profile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyawsutils.aws_lambda.update_lambda_function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update lambda function with ZIP deployment package</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>zip_file</strong> (<em>str</em>) – full path to zip file to use</p></li>
 <li><p><strong>stackname</strong> (<em>str</em>) – name of stack to update</p></li>
+<li><p><strong>aws_profile</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of AWS profile to use, defaults to ‘default’</p></li>
 </ul>
 </dd>
 </dl>
@@ -688,7 +699,7 @@ recommended in order to control the verbosity of output from dependencies in the
     </div>
     <div class="footer-wrapper">
         <div class="footer" role="contentinfo">
-            © Copyright 2022, Microchip Technology Inc
+            © Copyright 2023, Microchip Technology Inc
         </div>
     </div>
   </body>

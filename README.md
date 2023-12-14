@@ -35,5 +35,5 @@ pyawsutils can be used as a library.  Its primary consumer is [iotprovision](htt
 For usage examples see pypi.md.
 
 ## Notes for Linux® systems
-This package uses pyedbglib and other libraries for USB transport and some udev rules are required.  
+This package uses pyedbglib and other libraries for USB transport and some udev rules are required.
 For details see the pyedbglib package: https://pypi.org/project/pyedbglib

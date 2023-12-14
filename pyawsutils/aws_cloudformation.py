@@ -6,10 +6,10 @@ Methods to use AWS Cloudformation
 import time
 from os import path
 from logging import getLogger
-import boto3
 
 from . import aws_lambda
 from .pyaws_errors import PyawsError
+from .aws_services import get_aws_endpoint, create_aws_session
 
 STATUS_SUCCESS = 0
 STATUS_FAILURE = 1
@@ -27,10 +27,12 @@ CLOUDFORMATION_STACK_NAME = "MCHPStack"
 LAMBDA_ZIPPACK_NAME = "custom_lambdapack.zip"
 CLOUDFORMATION_FOLDER = "aws_cf"
 
-def setup_aws_jitr_account(force):
+def setup_aws_jitr_account(force, aws_profile='default'):
     """
     Setup AWS account for JITR, using Cloudformation and uploading Lambda pack with JITR code
 
+    :param aws_profile: Name of profile to use, defaults to 'default'
+    :type aws_profile: str, optional
     :param force: force stack creation again if it already exists
     :type force: boolean
     """
@@ -39,7 +41,7 @@ def setup_aws_jitr_account(force):
 
     create_cloudformation_stack(
         path.join(aws_cf_folder, CLOUDFORMATION_TEMPLATE_NAME), CLOUDFORMATION_STACK_NAME,
-        path.join(aws_cf_folder, LAMBDA_ZIPPACK_NAME), force)
+        path.join(aws_cf_folder, LAMBDA_ZIPPACK_NAME), force, aws_profile=aws_profile)
 
     return STATUS_SUCCESS
 
@@ -90,17 +92,27 @@ def check_status(cf_client, stack_name):
     return cur_status
 
 
-def create_cloudformation_stack(pc_template_file, stackname, zipname="", force=False):
+def create_cloudformation_stack(pc_template_file, stackname, zipname="", force=False, aws_profile='default'):
     """
     Create Cloudformation stack based on JSON template
     Update lambda function with zip deployment package
+
+    :param pc_template_file: Cloudformation template file
+    :type pc_template_file: str
+    :param stackname: Cloudformation stack name
+    :type stackname: str
+    :param zipname: Name of zip containing lambda function, defaults to ""
+    :type zipname: str, optional
+    :param force: Force stack re-creation, defaults to False
+    :type force: bool, optional
+    :param aws_profile: Name of AWS profile to use, defaults to 'default'
+    :type aws_profile: str, optional
     """
     logger = getLogger(__name__)
     logger.info("Setting up custom account...")
-    #Checking endpoint
-    iot_client = boto3.client('iot')
-    response = iot_client.describe_endpoint()
-    aws_endpoint_address = response['endpointAddress']
+
+    aws_session = create_aws_session(aws_profile=aws_profile)
+    aws_endpoint_address = get_aws_endpoint(aws_session=aws_session)
     logger.info("AWS endpoint : %s", aws_endpoint_address)
     #stop operation if sandbox account
     if aws_endpoint_address == MCHP_SANDBOX_ENDPOINT:
@@ -109,7 +121,7 @@ def create_cloudformation_stack(pc_template_file, stackname, zipname="", force=F
     json_data = open(pc_template_file).read()
 
     #Create cloudformation client
-    cf_client = boto3.client('cloudformation')
+    cf_client = aws_session.client('cloudformation')
     #-- Store parameters from file into local variables
     stack_name = stackname
 
@@ -158,13 +170,13 @@ def create_cloudformation_stack(pc_template_file, stackname, zipname="", force=F
     else:
         raise PyawsError("Failed to create stack {}".format(stack_name))
 
-    #Update function with correct ZIP deployment pacakge
+    #Update function with correct ZIP deployment package
     if zipname != "":
-        aws_lambda.update_lambda_function(zipname, stackname)
+        aws_lambda.update_lambda_function(zipname, stackname, aws_profile)
 
-def jitr_cli_handler():
+def jitr_cli_handler(args):
     """
     Entry point for JITR command of CLI
     """
-    setup_aws_jitr_account(force=True)
+    setup_aws_jitr_account(force=True, aws_profile=args.profile)
     return STATUS_SUCCESS

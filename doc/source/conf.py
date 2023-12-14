@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- Project information -----------------------------------------------------
 
 project = 'pyawsutils'
-copyright = '2022, Microchip Technology Inc'
+copyright = '2023, Microchip Technology Inc'
 author = 'Microchip Technology Inc'
 
 
@@ -38,7 +38,7 @@ templates_path = ['_templates']
 exclude_patterns = []
 
 # Mock out these objects (note: modules, not packages)
-autodoc_mock_imports = ['pyedbglib', 'pytrustplatform', 'appdirs', 'yaml', 'boto3', 'botocore', 'cryptography', 'pyOpenSSL']
+autodoc_mock_imports = ['pytrustplatform', 'appdirs', 'yaml', 'boto3', 'botocore', 'cryptography', 'pyOpenSSL']
 
 # -- Options for HTML output -------------------------------------------------
 

@@ -5,11 +5,11 @@ import os.path
 from string import Template
 from logging import getLogger
 import json
-import boto3
 import botocore
 
 from .pyaws_errors import PyawsError
 from .aws_cloudformation import MCHP_SANDBOX_ENDPOINT
+from .aws_services import create_aws_session, get_aws_endpoint
 from .status_codes import STATUS_SUCCESS
 
 ZT_POLICY_NAME = "zt_policy"
@@ -42,20 +42,13 @@ class Policy():
     """
     def __init__(self, aws_profile="default"):
         self.logger = getLogger(__name__)
-        try:
-            self.aws_session = boto3.session.Session(profile_name=aws_profile)
-            self.logger.info("Using AWS profile %s", aws_profile)
-            self.aws_iot_client = self.aws_session.client("iot")
-        except botocore.exceptions.ProfileNotFound:
-            if aws_profile == 'default':
-                raise PyawsError(
-                    'AWS profile not found. Please make sure you have the AWS CLI installed and run'
-                    ' "aws configure" to setup profile.')
-            raise PyawsError(
-                'AWS profile not found. Please make sure you have the AWS CLI installed and run'
-                ' "aws configure --profile {}" to setup profile.'.format(aws_profile))
 
-        self.account_id = boto3.client('sts').get_caller_identity().get('Account')
+        self.aws_profile = aws_profile
+        self.aws_session = create_aws_session(self.aws_profile)
+        self.logger.info("Using AWS profile %s", self.aws_profile)
+        self.aws_iot_client = self.aws_session.client("iot")
+
+        self.account_id = self.aws_session.client('sts').get_caller_identity().get('Account')
         self.region = self.aws_session.region_name
 
     def build_policy(self, policy_template):
@@ -101,8 +94,7 @@ class Policy():
         :type policy_template: str
         """
         #Checking endpoint
-        iot = boto3.client('iot')
-        aws_endpoint = iot.describe_endpoint()["endpointAddress"]
+        aws_endpoint = get_aws_endpoint(aws_session=self.aws_session)
         if aws_endpoint == MCHP_SANDBOX_ENDPOINT:
             raise PyawsError("Please don't use the Microchip Sandbox account for MAR setup")
 
@@ -170,7 +162,7 @@ def policy_cli_handler(args):
     """
     logger = getLogger(__name__)
 
-    templatefile = args.policy_template    
+    templatefile = args.policy_template
     if args.policy_template is None:
         templatefile = ZT_POLICY_TEMPLATE_FILE
         logger.info("Using default template file %s", templatefile)
